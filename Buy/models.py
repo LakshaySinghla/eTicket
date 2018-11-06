@@ -26,7 +26,7 @@ class RemainingTickets(models.Model):
 	typeBRemaining = models.IntegerField(default=0)
 	typeCRemaining = models.IntegerField(default=0)
 	
-	def update(self, stadium):
+	def initialise(self, stadium):
 		self.typeARemaining = stadium.typeATotal 
 		self.typeBRemaining = stadium.typeBTotal
 		self.typeCRemaining = stadium.typeCTotal
@@ -42,15 +42,9 @@ class Match(models.Model):
 	def __str__(self):
 		return self.teamA+' vs '+self.teamB
 
-
-class TicketType(models.Model):
-	name = models.CharField(max_length=1)
-	price = models.IntegerField(default=0)
-	def __str__(self):
-		return self.name + ' '+ str(self.price)
-
 class Ticket(models.Model):
-	ticketType = models.ForeignKey(TicketType, on_delete=models.CASCADE)
+	ticketType = models.CharField(max_length=10)
+	price = models.IntegerField(default=0)
 	emailId = models.ForeignKey(User, on_delete=models.CASCADE, default=0)
 	matchId = models.ForeignKey(Match, on_delete=models.CASCADE, default=0)
 	def __str__(self):

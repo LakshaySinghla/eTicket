@@ -5,3 +5,9 @@ from django.http import HttpResponse
 def index(request):
 	return render(request,'Buy/index.html',{})
 	# return HttpResponse("Hello World")
+
+def match1(request):
+	return render(request,'Buy/match1.html',{})
+
+def match2(request):
+	return render(request,'Buy/match2.html',{})
