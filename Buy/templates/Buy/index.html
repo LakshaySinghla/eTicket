@@ -1,7 +1,18 @@
-<form method="get" action="/match1">
-    <button type="submit">Match 1</button>
-</form>
-<br>
-<form method="get" action="/match2">
-    <button type="submit">Match 2</button>
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Matches</title>
+</head>
+<body>
+	{% if matches %}
+	    {% for m in matches %}
+	    	<form method="get" action="/{{ m.name }}">
+	    		<button type="submit">{{ m }}</button>
+	    	</form>
+	    	<br>
+	    {% endfor %}
+	{% else %}
+		<p>No Matches found !!</p>
+	{% endif %}
+</body>
+</html>

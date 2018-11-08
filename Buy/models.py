@@ -27,6 +27,7 @@ class RemainingTickets(models.Model):
 	typeCRemaining = models.IntegerField(default=0)
 	
 	def initialise(self, stadium):
+		self.stadiumId = stadium
 		self.typeARemaining = stadium.typeATotal 
 		self.typeBRemaining = stadium.typeBTotal
 		self.typeCRemaining = stadium.typeCTotal
@@ -35,6 +36,7 @@ class RemainingTickets(models.Model):
 		return self.stadiumId.name
 
 class Match(models.Model):
+	name = models.CharField(max_length=256,default='match')
 	teamA = models.CharField(max_length=256)
 	teamB = models.CharField(max_length=256)
 	stadiumId = models.ForeignKey(Stadium,on_delete=models.CASCADE)
