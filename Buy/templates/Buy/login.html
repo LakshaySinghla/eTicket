@@ -7,13 +7,19 @@
 <body>
 	<div class='container jumbotron'>
 
-		<form method="POST">
+		<form method="POST" >
 	    	{{form.as_p}}
 	      	{% csrf_token %}
 	    	<input type="submit" class="btn btn-primary" value="Login">
 	  	</form>
 
 
+  	</div>
+  	<div class='container'>
+  		<form method="GET" action="{% url 'Buy:signup' %}">
+  			<button>Sign Up</button>
+  		</form>
+  		
   	</div>
 
 
