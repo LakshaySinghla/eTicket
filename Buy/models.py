@@ -47,7 +47,7 @@ class Match(models.Model):
 class Ticket(models.Model):
 	ticketType = models.CharField(max_length=10)
 	price = models.IntegerField(default=0)
-	emailId = models.ForeignKey(User, on_delete=models.CASCADE, default=0)
+	userId = models.ForeignKey(User, on_delete=models.CASCADE, default=0)
 	matchId = models.ForeignKey(Match, on_delete=models.CASCADE, default=0)
 	def __str__(self):
-		return self.ticketType.name
+		return self.ticketType + ' : ' + str(self.price) + ' by ' + self.userId.name

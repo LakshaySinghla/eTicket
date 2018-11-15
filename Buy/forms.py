@@ -16,6 +16,8 @@ class SignupForm(forms.Form):
 		if p!=c:
 			raise forms.ValidationError("Password and Confirm Password does not match!!")
 
+	def raiseError(self):
+		raise forms.ValidationError("Something went wrong!! Try again.")
 	# def clean_botcatcher(self):
 	# 	inp = self.cleaned_data['botcatcher']
 	# 	if len(inp) > 0 :
