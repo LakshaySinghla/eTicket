@@ -19,21 +19,6 @@ class Stadium(models.Model):
 	typeCPrice = models.IntegerField(default=0)
 	def __str__(self):
 		return self.name
-	
-class RemainingTickets(models.Model):
-	stadiumId = models.ForeignKey(Stadium, on_delete=models.CASCADE)
-	typeARemaining = models.IntegerField(default=0)
-	typeBRemaining = models.IntegerField(default=0)
-	typeCRemaining = models.IntegerField(default=0)
-	
-	def initialise(self, stadium):
-		self.stadiumId = stadium
-		self.typeARemaining = stadium.typeATotal 
-		self.typeBRemaining = stadium.typeBTotal
-		self.typeCRemaining = stadium.typeCTotal
-	
-	def __str__(self):
-		return self.stadiumId.name
 
 class Match(models.Model):
 	name = models.CharField(max_length=256,default='match')
@@ -43,6 +28,21 @@ class Match(models.Model):
 	date = models.DateTimeField('match_date')
 	def __str__(self):
 		return self.teamA+' vs '+self.teamB
+
+class RemainingTickets(models.Model):
+	matchId = models.ForeignKey(Match, on_delete=models.CASCADE)
+	typeARemaining = models.IntegerField(default=0)
+	typeBRemaining = models.IntegerField(default=0)
+	typeCRemaining = models.IntegerField(default=0)
+	
+	def save(self, *args, **kwargs):
+		# self.typeARemaining = self.matchId.stadiumId.typeATotal
+		# self.typeBRemaining = self.matchId.stadiumId.typeBTotal
+		# self.typeCRemaining = self.matchId.stadiumId.typeCTotal
+		super().save(*args, **kwargs)
+
+	def __str__(self):
+		return self.matchId.name
 
 class Ticket(models.Model):
 	ticketType = models.CharField(max_length=10)

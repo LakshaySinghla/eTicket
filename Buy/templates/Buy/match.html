@@ -102,9 +102,9 @@ img {vertical-align: middle;}
             		<input type="hidden" name="matchid" value="{{match.pk}}">
 					<input type="hidden" name="sid" value="{{stadium.pk}}">
             	<div class = "ticketType-left">
-					<button class = "button" name="type" value="A" type="submit">GOLD CLASS</button>
-					<button class = "button" name="type" value="B" type="submit">SILVER CLASS</button>
-					<button class = "button" name="type" value="C" type="submit">BRONZE CLASS</button>
+					<button class = "button" name="type" value="A" type="submit">GOLD CLASS</button>{{rem.typeARemaining}}
+					<button class = "button" name="type" value="B" type="submit">SILVER CLASS</button>{{rem.typeBRemaining}}
+					<button class = "button" name="type" value="C" type="submit">BRONZE CLASS</button>{{rem.typeBRemaining}}
             	</div>
             </form>
             <div class = "ticketType-right"></div>

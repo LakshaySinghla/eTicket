@@ -7,21 +7,21 @@ def buyTicket(uId, mId, sId, ty):
 	ticketPrice = 0
 	ticketType = 'Z'
 	stadium = Stadium.objects.get(pk=sId)
-	rTickets = RemainingTickets.objects.get(stadiumId=stadium)
+	match = Match.objects.get(pk=mId)
+	rTickets = RemainingTickets.objects.get(matchId=match)
 	if ty == 'A':
 		ticketType = 'A'
 		ticketPrice = stadium.typeAPrice
-		rTickets.typeARemaining = rTickets.typeARemaining -1 ;
+		rTickets.typeARemaining = rTickets.typeARemaining -1 
 	elif ty =='B':
 		ticketType = 'B'
 		ticketPrice = stadium.typeBPrice
-		rTickets.typeBRemaining = rTickets.typeBRemaining -1 ;
+		rTickets.typeBRemaining = rTickets.typeBRemaining -1 
 	elif ty =='C':
 		ticketType = 'C'
 		ticketPrice = stadium.typeBPrice
-		rTickets.typeCRemaining = rTickets.typeCRemaining -1 ;
+		rTickets.typeCRemaining = rTickets.typeCRemaining -1 
 	user = User.objects.get(pk=uId)
-	match = Match.objects.get(pk=mId)
 	t = Ticket(ticketType=ticketType, price=ticketPrice, userId=user, matchId=match)
 	t.save()
 	rTickets.save()
@@ -38,7 +38,7 @@ def match(request):
 	mId = request.GET.get('matchid')
 	m = Match.objects.get(pk=mId)
 	st = m.stadiumId
-	rem = RemainingTickets.objects.get(stadiumId=st)
+	rem = RemainingTickets.objects.get(matchId=mId)
 	dic = {"match" : m,
 			"stadium" : st,
 			"rem" : rem }
