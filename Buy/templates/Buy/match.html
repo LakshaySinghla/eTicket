@@ -100,7 +100,8 @@ img {vertical-align: middle;}
             <h4 class = "headingText2">Tickets</h4>
             <form method="GET" action="{% url 'Buy:login' %}">
             		<input type="hidden" name="matchid" value="{{match.pk}}">
-					<input type="hidden" name="sid" value="{{stadium.pk}}">
+                    <input type="hidden" name="sid" value="{{stadium.pk}}">
+                    <input name="count">
             	<div class = "ticketType-left">
 					<button class = "button" name="type" value="A" type="submit">GOLD CLASS</button>{{rem.typeARemaining}}
 					<button class = "button" name="type" value="B" type="submit">SILVER CLASS</button>{{rem.typeBRemaining}}

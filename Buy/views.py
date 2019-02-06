@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from Buy.models import User, Stadium, Ticket, RemainingTickets,Match
 from . import forms
 
-def buyTicket(uId, mId, sId, ty):
+def buyTicket(uId, mId, sId, ty, count):
 	ticketPrice = 0
 	ticketType = 'Z'
 	stadium = Stadium.objects.get(pk=sId)
@@ -12,15 +12,15 @@ def buyTicket(uId, mId, sId, ty):
 	if ty == 'A':
 		ticketType = 'A'
 		ticketPrice = stadium.typeAPrice
-		rTickets.typeARemaining = rTickets.typeARemaining -1 
+		rTickets.typeARemaining = rTickets.typeARemaining - int(count)
 	elif ty =='B':
 		ticketType = 'B'
 		ticketPrice = stadium.typeBPrice
-		rTickets.typeBRemaining = rTickets.typeBRemaining -1 
+		rTickets.typeBRemaining = rTickets.typeBRemaining - int(count)
 	elif ty =='C':
 		ticketType = 'C'
 		ticketPrice = stadium.typeBPrice
-		rTickets.typeCRemaining = rTickets.typeCRemaining -1 
+		rTickets.typeCRemaining = rTickets.typeCRemaining - int(count)
 	user = User.objects.get(pk=uId)
 	t = Ticket(ticketType=ticketType, price=ticketPrice, userId=user, matchId=match)
 	t.save()
@@ -49,6 +49,7 @@ def SignupFormView(request):
 	mId=request.GET.get('matchid')
 	sId=request.GET.get('sid')
 	ty = request.GET.get('type')
+	count = request.GET.get('count')
 
 	if request.method == 'POST':
 		form = forms.SignupForm(request.POST)
@@ -61,7 +62,7 @@ def SignupFormView(request):
 			pas = form.cleaned_data['password']
 			u = User(name=n, emailId=em, password=pas)
 			u.save()
-			buyTicket(u.pk, mId, sId, ty)
+			buyTicket(u.pk, mId, sId, ty,count)
 			return redirect('/final/')
 		else:
 			forms.SignupForm.raiseError()
@@ -73,13 +74,14 @@ def LoginFormView(request):
 	mId=request.GET.get('matchid')
 	sId=request.GET.get('sid')
 	ty = request.GET.get('type')
+	count = request.GET.get('count')
 	
 	if request.method == 'POST':
 		form = forms.LoginForm(request.POST)
 		form.is_valid()
 		u = User.objects.get(emailId = form.cleaned_data['email'])
 		if u.password == form.cleaned_data['password']:
-			buyTicket(u.pk, mId, sId, ty)
+			buyTicket(u.pk, mId, sId, ty,count)
 			return redirect('/final/')
 			#return render(request, 'Buy/final.html',{'name' : u.name})
 
@@ -89,6 +91,7 @@ def LoginFormView(request):
 				'matchid' : mId,
 				'sid' : sId,
 				'type' : ty,
+				'count' : count,
 				'error' : 'yes'
 			}
 			return render(request, 'Buy/login.html',dic)
